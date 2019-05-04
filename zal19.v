@@ -4,6 +4,7 @@ Require Import Eqdep.
 Require Import Eqdep_dec.
 Require Import Omega.
 
+(* Solution author: Witalis Domitrz *)
 
 (* Coq assignment - ZPF 2019 - due to 14.05.2019
 
@@ -67,10 +68,10 @@ Proof.
   * apply Forall_nil.
   * simpl countPL in H.
     case (P_dec a) in H.
-    - congruence.
-    - apply Forall_cons.
-      + assumption.
-      + apply (IHl H).
+    + congruence.
+    + apply Forall_cons.
+      - assumption.
+      - apply (IHl H).
 Qed.
 
 Lemma cPL2_helper: forall (l:list A), countPL l <= length l.
@@ -88,13 +89,24 @@ Proof.
       assumption.
 Qed.
 
-Lemma cPL2_helper2: forall (l:list A), countPL l = S (length l) -> False.
+Lemma cPL2_helper2: forall (l:list A), not (countPL l > length l).
 Proof.
+  unfold not.
   intros.
   induction l.
   * simpl countPL in H.
-
-Admitted.
+    simpl length in H.
+    inversion H.
+  * apply IHl.
+    simpl length in H.
+    simpl countPL in H.
+    case (P_dec a) in H.
+    + apply le_S_n in H.
+      assumption.
+    + apply le_S in H.
+      apply le_S_n in H.
+      assumption.
+Qed.
 
 Lemma cPL2: forall (l:list A), countPL l = length l -> Forall P l.
 Proof.
@@ -110,11 +122,11 @@ Proof.
         reflexivity.
     + exfalso.
       apply (cPL2_helper2 l).
-      assumption.
+      rewrite H.
+      apply le_refl.
 Qed.
 
 Print cPL2.
-
 
 (* in case of troubles: think about the lengths of the lists *)
 
@@ -191,10 +203,11 @@ Do it twice:
 Fill:
 *)
 
-Definition elemType n : Type := match n with
+Definition elemType n : Type := 
+  match n with
   | 0 => vector 0
   | S n' => A
-end.
+  end.
 
 Definition lastType n : Type := elemType n.
 
@@ -213,66 +226,48 @@ Proof.
       assumption.
 Defined.
 
-
-
 Definition lastOfNonemptyByProof {n:nat} (v:vector (S n)): A := lastLemma v.
 
-Lemma head: forall {n: nat} (v : vector (S n)), A.
-Proof.
-  intros.
-  inversion v.
-  assumption.
-Qed.
+(*
+  Wydzieliłem część odpowiedzialną za rozbicie wektora na głowę i ogon z lastFixpoint.
+  Wektor o dodatniej długości traktuję jak Vcons a t, gdzie a to głowa, a t to ogon.
+*)
+(* Typ pomocniczy do splitVector *)
+Definition splitType n : Type :=
+  match n with
+  | 0 => vector 0
+  | S n' => A * vector n'
+  end.
 
-Lemma splitVectorLemma {n: nat} (v: vector (S n)): (A * vector n).
-Proof.
-  inversion v.
-  info_auto.
-Qed.
+Fixpoint splitVector {n: nat} (v: vector (S n)): splitType (S n) :=
+  match v with
+  | Vnil => Vnil
+  | @Vcons m a t => (a, t)
+  end.
 
-Print splitVectorLemma.
+(*
+  Te funkcje definiuję w celu sprawienia, żeby zapis był ładniejszy
+*)
+Fixpoint headVector {n: nat} (v: vector (S n)): A :=
+  let (a, _) := splitVector v in a.
 
-Fixpoint splitVector {n: nat} (v: vector (S n)): (A * vector n) :=
-  (match v in (vector n') return (n' = S n -> A * vector n) with
-  | Vnil =>
-      fun H =>
-      (fun H0 =>
-       let H1 :=
-         eq_ind 0
-           (fun e : nat => match e with
-                           | 0 => True
-                           | S _ => False
-                           end) I (S n) H0
-         :
-         False in
-       False_rect (A * vector n) H1) H
-  | @Vcons n' a v' =>
-      fun H : S n' = S n =>
-      (fun H0 : S n' = S n =>
-       let H1 :=
-         f_equal (fun e : nat => match e with
-                                 | 0 => n'
-                                 | S n'' => n''
-                                 end) H0
-         :
-         n' = n in
-       (fun H2 : n' = n =>
-        let H3 := H2 : n' = n in
-        eq_rect_r (fun n'' : nat => A -> vector n'' -> A * vector n)
-          (fun (X1 : A) (X2 : vector n) => (X1, X2)) H3) H1) H a v'
-  end) eq_refl.
+Fixpoint tailVector {n: nat} (v: vector (S n)): vector n :=
+  let (_, t) := splitVector v in t.
+
+(* Definicja w celu ułatwienia zapisu. Jest to Haskelowa `.` *)
+Definition compose {A' B' C'} (g : B' -> C') (f : A' -> B') :=
+  fun x : A' => g (f x).
 
 Fixpoint lastFixpoint {n: nat}: vector n ->  lastType n:=
-match n as x return (vector x -> lastType x) with
-| O => fun t => t
-| S m => fun t (* tuple S m *) =>
-   (match m as n1 return ((vector n1 -> lastType n1) -> vector (S n1) -> A)
-   with
-   | 0 => fun _ H => let (t, _) := splitVector H in t
-   | S n1 => fun IHn0 X => IHn0 (let (_,t0) := splitVector X in let (t1,t2) := splitVector t0 in Vcons t1 t2)
-   end) (@lastFixpoint m) t
-end.
-
+  match n as n' return (vector n' -> lastType n')
+  with
+  | O => id
+  | S m =>
+    match m as m' return ((vector m' -> lastType m') -> vector (S m') -> A) with
+    | 0 => fun _ => headVector
+    | S n1 => fun lastFixpoint' => compose lastFixpoint' tailVector
+    end (@lastFixpoint m) (* indukcyjne składanie funkcji (@lastFixpoint m) *)
+  end.
 
 Definition lastOfNonemptyByHand {n:nat} (v:vector (S n)) : A := lastFixpoint v.
 
@@ -289,25 +284,55 @@ Eval compute in (lastOfNonemptyByHand (Vcons e1 (Vcons e2 (Vcons e3 Vnil)))).
 Prove lemmas cPV1 and cPV2
 *)
 
-(*
-Inductive ForallV (P:A-> Prop): forall {n:nat}, vector n -> Prop :=
-    Forall_Vnil : ForallV P Vnil
-  | Forall_Vcons : forall (x : A) (n:nat) (v : vector n),
-                  P x -> ForallV P v -> ForallV P (Vcons x v).
-                  *)
+(* Analogicznie do cPL1 i cPL2. *)
 
 Lemma cPV1: forall (n:nat)(v:vector n), countPV v = 0 -> 
            ForallV (fun x => ~P x) v.
 Proof.
   intros.
   induction v.
-  *
-Admitted.
+  * apply Forall_Vnil.
+  * simpl countPV in H.
+    case (P_dec a) in H.
+    + congruence.
+    + apply Forall_Vcons.
+      - assumption.
+      - apply (IHv H).
+Qed.
 
+Lemma cPV2_helper: forall (n:nat) (v:vector n), not (countPV v > n).
+Proof.
+  unfold not.
+  intros.
+  induction v.
+  * simpl countPV in H.
+    inversion H.
+  * apply IHv.
+    simpl countPV in H.
+    case (P_dec a) in H.
+    + apply le_S_n in H.
+      assumption.
+    + apply le_S in H.
+      apply le_S_n in H.
+      assumption.
+Qed.
 
 Lemma cPV2: forall (n:nat) (v:vector n), countPV v = n -> ForallV P v.
 Proof.
-Admitted.
+  intros.
+  induction v.
+  * apply Forall_Vnil.
+  * simpl countPV in H.
+    destruct (P_dec a).
+    + apply Forall_Vcons; try apply IHv.
+      - assumption.
+      - inversion H.
+        assumption.
+    + exfalso.
+      apply (cPV2_helper v).
+      rewrite H.
+      apply le_refl.
+Qed.
 
 (* Recall that UIP_refl nat is provable in Coq *)
 
@@ -323,11 +348,16 @@ Lemma cPVInversion: forall (n:nat) (a:A) (v:vector n),
       S n = countPV (Vcons a v) -> (P a /\ n = countPV v).
 Proof.
   intros.
-  pose proof (countPV (Vcons a v) = S n).
-  pose proof (cPV2 (Vcons a v)).
-  rewrite <- H in H0.
-  split.
-  
+  simpl in H.
+  case (P_dec a) in H.
+  * split.
+    + assumption.
+    + inversion H.
+      assumption.
+  * exfalso.
+    apply (cPV2_helper v).
+    rewrite <- H.
+    apply le_n.
 Qed.
 
 (*
@@ -341,13 +371,14 @@ filterV v = match d in _= n' return vector n' with
                             end.
 Proof.
   intros.
-  induction v; try simpl.
+  induction v.
   * simpl.
     rewrite (UIP_refl nat 0 d).
     reflexivity.
-  *
-Admitted.
-
+  * pose proof (cPVInversion a v d).
+    inversion H.
+    apply cPV2.
+Qed.
 
 (* 
 cPVtc is a type-cast needed to formulate the lemma given below
