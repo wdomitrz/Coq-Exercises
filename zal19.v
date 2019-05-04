@@ -8,22 +8,22 @@ Require Import Omega.
 
 (* Coq assignment - ZPF 2019 - due to 14.05.2019
 
-Fill the definitions and prove the lemmas given below (replace 
+Fill the definitions and prove the lemmas given below (replace
 Admitted with Qed).
 
-It is not allowed to: 
+It is not allowed to:
 1. change/erase given definitions and lemma statements,
    section header/footer, variable declaration, etc.,
-2. introduce your own axioms, parameters, variables, hypotheses etc.,   
+2. introduce your own axioms, parameters, variables, hypotheses etc.,
 3. import other modules,
 4. define Ltac tactics.
 
 It is allowed to:
 1. introduce your own definitions and auxiliary lemmas,
 2. change the order of the lemmas to prove,
-3. add comments. 
+3. add comments.
 
-Submit your solution via email before 23:59 on 14.05.2019. 
+Submit your solution via email before 23:59 on 14.05.2019.
 You should submit one file named zal.v containing your proofs.
 
 The author of the assignment and the grader is Daria Walukiewicz-Chrząszcz.
@@ -49,8 +49,8 @@ match l with
 | cons a l' => if P_dec a then cons a (filterL l') else filterL l'
 end.
 
-Fixpoint countPL (l : list A) := 
-match l with 
+Fixpoint countPL (l : list A) :=
+match l with
 | nil => O
 | cons x l' => if P_dec x then S (countPL l') else countPL l'
 end.
@@ -60,7 +60,7 @@ end.
 
 Print Forall.
 
-Lemma cPL1: forall (l:list A), countPL l = 0 -> 
+Lemma cPL1: forall (l:list A), countPL l = 0 ->
            Forall (fun x => ~P x) l.
 Proof.
   intros.
@@ -126,7 +126,6 @@ Proof.
       apply le_refl.
 Qed.
 
-Print cPL2.
 
 (* in case of troubles: think about the lengths of the lists *)
 
@@ -153,12 +152,12 @@ Inductive vector : nat -> Type :=
   Arguments Vcons {_} _ _.
 
 (*
-Write the definition of countPV on vectors; it should correspond to countPL 
+Write the definition of countPV on vectors; it should correspond to countPL
 Use keyword Fixpoint
 *)
 
-Fixpoint countPV {n : nat} (v : vector n) := 
-match v with 
+Fixpoint countPV {n : nat} (v : vector n) :=
+match v with
 | Vnil => O
 | Vcons a v' => if P_dec a then S (countPV v') else countPV v'
 end.
@@ -194,8 +193,8 @@ Inductive ForallV (P:A-> Prop): forall {n:nat}, vector n -> Prop :=
   | Forall_Vcons : forall (x : A) (n:nat) (v : vector n),
                   P x -> ForallV P v -> ForallV P (Vcons x v).
 
-(* 
-Write the definition of the last element of a nonempty vector. 
+(*
+Write the definition of the last element of a nonempty vector.
 Do it twice:
 - using tactics in proof-mode
 - using Fixpoint and match
@@ -203,7 +202,7 @@ Do it twice:
 Fill:
 *)
 
-Definition elemType n : Type := 
+Definition elemType n : Type :=
   match n with
   | 0 => vector 0
   | S n' => A
@@ -277,16 +276,16 @@ Variable e1 e2 e3:A.
 (*
 and test it:
 *)
-Eval compute in (lastOfNonemptyByProof (Vcons e1 (Vcons e2 (Vcons e3 Vnil)))). 
-Eval compute in (lastOfNonemptyByHand (Vcons e1 (Vcons e2 (Vcons e3 Vnil)))). 
+Eval compute in (lastOfNonemptyByProof (Vcons e1 (Vcons e2 (Vcons e3 Vnil)))).
+Eval compute in (lastOfNonemptyByHand (Vcons e1 (Vcons e2 (Vcons e3 Vnil)))).
 
-(* 
+(*
 Prove lemmas cPV1 and cPV2
 *)
 
 (* Analogicznie do cPL1 i cPL2. *)
 
-Lemma cPV1: forall (n:nat)(v:vector n), countPV v = 0 -> 
+Lemma cPV1: forall (n:nat)(v:vector n), countPV v = 0 ->
            ForallV (fun x => ~P x) v.
 Proof.
   intros.
@@ -340,11 +339,11 @@ Check (UIP_refl nat).
 
 
 (*
-Prove the following inversion lemma 
+Prove the following inversion lemma
 *)
 
 
-Lemma cPVInversion: forall (n:nat) (a:A) (v:vector n), 
+Lemma cPVInversion: forall (n:nat) (a:A) (v:vector n),
       S n = countPV (Vcons a v) -> (P a /\ n = countPV v).
 Proof.
   intros.
@@ -364,23 +363,26 @@ Qed.
 Prove cPVfilterVIdentity
 *)
 
+Lemma cPVfilterVIdentityHelper: forall {n:nat} (v:vector n) (d: n = countPV v) (a:A) (d': P a),
+      countPV (Vcons a v) = S (countPV v).
+Proof.
+  intros.
+  simpl.
+  case (P_dec a).
+  * intros.
+    reflexivity.
+  * intros.
+    contradiction.
+Qed.
 
 Lemma cPVfilterVIdentity: forall (n:nat) (v:vector n) (d: n = countPV v),
 filterV v = match d in _= n' return vector n' with
                             | eq_refl => v
                             end.
 Proof.
-  intros.
-  induction v.
-  * simpl.
-    rewrite (UIP_refl nat 0 d).
-    reflexivity.
-  * pose proof (cPVInversion a v d).
-    inversion H.
-    apply cPV2.
-Qed.
+Admitted.
 
-(* 
+(*
 cPVtc is a type-cast needed to formulate the lemma given below
 *)
 
@@ -388,7 +390,8 @@ Lemma cPVtc : forall {n:nat} (v:vector n),  countPV v = countPV (filterV v).
 Proof.
   intros.
   induction v.
-  * trivial.
+  * simpl.
+    reflexivity.
   * simpl.
     case (P_dec a); try intros.
     + simpl countPV.
@@ -399,10 +402,10 @@ Proof.
     + assumption.
 Qed.
 
-(* 
+(*
 Use the lemmas proved above to show that filterV is idempotent
 *)
- 
+
 
 Lemma filterV_idem: forall {n:nat} (v:vector n),
       filterV (filterV v) = match cPVtc v in _= n' return vector n' with
