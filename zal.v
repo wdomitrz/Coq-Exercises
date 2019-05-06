@@ -4,6 +4,7 @@ Require Import Eqdep.
 Require Import Eqdep_dec.
 Require Import Omega.
 
+
 (* Solution author: Witalis Domitrz *)
 
 (* Coq assignment - ZPF 2019 - due to 14.05.2019
@@ -35,7 +36,7 @@ Section filterL.
 Nondependent case : filter on lists
 --------------------------------------------------------------------
 *)
-Set Printing All.
+
 Print list.
 
 Variable A : Type.
@@ -200,6 +201,9 @@ Do it twice:
 - using Fixpoint and match
 
 Fill:
+
+Definition lastOfNonemptyByProof {n:nat} (v:vector (S n)): A :=
+Definition lastOfNonemptyByHand {n:nat} (v:vector (S n)) : A :=
 *)
 
 Definition elemType n : Type :=
@@ -363,24 +367,34 @@ Qed.
 Prove cPVfilterVIdentity
 *)
 
-Lemma cPVfilterVIdentityHelper: forall {n:nat} (v:vector n) (d: n = countPV v) (a:A) (d': P a),
-      countPV (Vcons a v) = S (countPV v).
-Proof.
-  intros.
-  simpl.
-  case (P_dec a).
-  * intros.
-    reflexivity.
-  * intros.
-    contradiction.
-Qed.
 
 Lemma cPVfilterVIdentity: forall (n:nat) (v:vector n) (d: n = countPV v),
 filterV v = match d in _= n' return vector n' with
                             | eq_refl => v
                             end.
 Proof.
-Admitted.
+  intros.
+  induction v.
+  * rewrite (UIP_refl nat 0 d).
+    simpl filterV.
+    reflexivity.
+  * pose proof (cPVInversion a v d).
+    inversion H.
+    simpl filterV.
+    simpl countPV.      (* Nie zmienia wyrażenia, które jest widoczne, ale
+                           tak naprawdę zmienia wyrażenie, bo utorzsamia:
+                           "vector (if s0 then S (countPV v) else countPV v)" oraz
+                           "vector (countPV (Vcons a v))", a dokładniej:
+                           "if s0 then S (countPV v) else countPV v" oraz
+                           "countPV (Vcons a v)". *)
+    simpl countPV in d.
+    destruct (P_dec a).
+    + rewrite (IHv H1).
+      destruct H1.
+      rewrite (UIP_refl nat (S n) d).
+      reflexivity.
+    + contradiction H0.
+Qed.
 
 (*
 cPVtc is a type-cast needed to formulate the lemma given below
