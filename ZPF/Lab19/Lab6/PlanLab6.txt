@@ -1,0 +1,13 @@
+Exercises:
+
+* coqITP2015-course4.v
+ (dependent pattern-mtching, definitions using transparent type-cast)
+
+coqITP2015-course4.v comes from https://coq.inria.fr/coq-itp-2015
+
+Assignment:
+
+Coq assignment is due to 07.05.2019
+
+
+

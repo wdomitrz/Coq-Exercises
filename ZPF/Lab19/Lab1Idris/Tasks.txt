@@ -1,0 +1,74 @@
+1. Implement functions:
+ 
+a) my_vect_map : (a -> b) -> Vect n a -> Vect n b
+b)insert : Ord elem => (x : elem) -> (xsSorted : Vect k elem) -> Vect (S k) elem
+c)insSort : Ord elem => Vect n elem -> Vect n elem 
+
+remember to import Data.Vect
+
+2. Suppose that type of n x m matrices (n rows, m columns) of values in type a is represented by Vect n (Vect m a). 
+
+Using:
+
+create_empties : Vect n (Vect 0 elem)
+create_empties {n} = replicate n []
+
+implement functions: 
+
+a) transpose_mat : Vect m (Vect n elem) -> Vect n (Vect m elem)
+
+that transposes: 
+
+1 2 3
+4 5 6
+
+to:
+
+1 4
+2 5
+3 6
+
+b) addMatrix : Num a => Vect n (Vect m a) -> Vect n (Vect m a) -> Vect n (Vect m
+
+c) multMatrix : Num a => Vect m (Vect n a) -> Vect n (Vect p a) -> Vect m (Vect p a)
+
+Tip: when implementing
+     multMatrix m1 m2
+start with
+     transpose_mat m2
+
+3. Try to understand the definition of type Fin and functions: integerToFin, index
+ 
+(:module Data.Vect, :doc Fin, :t integerToFin, :t index)
+
+and check values:
+
+integerToFin 0 4
+integerToFin 1 4
+integerToFin 2 4
+integerToFin 3 4
+integerToFin 4 4
+
+Implement functions:
+
+a) tryIndex : Integer -> Vect n a -> Maybe a
+b) take for Vect
+c) sumEntries : Num a => (pos : Integer) -> Vect n a -> Vect n a -> Maybe a
+
+4. Examine the file Printf.idr and add formats Char and Double
+
+5. Define vectors using nested tuples so that:
+
+TupleVect 0 ty = ()
+TupleVect 1 ty = (ty, ())
+TupleVect 2 ty = (ty, (ty, ()))
+....
+
+In other words define function computing types TupleVect, so that:
+
+test : TupleVect 4 Nat
+test = (1,2,3,4,())
+
+Implement function appendTV for these vectors. Check that it is total.
+
+

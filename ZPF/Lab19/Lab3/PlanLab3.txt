@@ -1,0 +1,19 @@
+Introduction:  
+
+* tactics-examples.v
+
+Exercises:
+
+* coqITP2015-ex2.v (read and/or complete)
+* coqITP2015-ex3.v:
+  try to do the exercises in this order:
+  a) Exercise 1
+  b) Exercise 2 - Q7 i Q8
+  c) Exercise 5
+  d) Exercise 4  
+
+Exercises in coqITP2015-ex2.v and coqITP2015-ex3.v come from 
+https://coq.inria.fr/coq-itp-2015
+
+
+

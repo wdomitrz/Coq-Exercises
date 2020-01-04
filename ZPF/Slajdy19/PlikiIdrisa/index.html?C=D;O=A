@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+ <head>
+  <title>Index of /~daria/ZPF/2019/Slajdy19/PlikiIdrisa</title>
+ </head>
+ <body>
+<h1>Index of /~daria/ZPF/2019/Slajdy19/PlikiIdrisa</h1>
+  <table>
+   <tr><th valign="top"><img src="/icons/blank.gif" alt="[ICO]"></th><th><a href="?C=N;O=A">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th><th><a href="?C=D;O=D">Description</a></th></tr>
+   <tr><th colspan="5"><hr></th></tr>
+<tr><td valign="top"><img src="/icons/back.gif" alt="[PARENTDIR]"></td><td><a href="/~daria/ZPF/2019/Slajdy19/">Parent Directory</a>       </td><td>&nbsp;</td><td align="right">  - </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="Adder.idr">Adder.idr</a>              </td><td align="right">2019-03-04 18:08  </td><td align="right">288 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="AppendVecRew.idr">AppendVecRew.idr</a>       </td><td align="right">2019-03-04 18:08  </td><td align="right">391 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="ApplyVec.idr">ApplyVec.idr</a>           </td><td align="right">2019-03-04 18:08  </td><td align="right">381 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="Eq.idr">Eq.idr</a>                 </td><td align="right">2019-03-04 18:08  </td><td align="right">713 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="EqNat.idr">EqNat.idr</a>              </td><td align="right">2019-03-04 18:08  </td><td align="right">504 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="ExactLength.idr">ExactLength.idr</a>        </td><td align="right">2019-03-04 18:08  </td><td align="right">1.1K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="FCTypes.idr">FCTypes.idr</a>            </td><td align="right">2019-03-04 18:08  </td><td align="right">443 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="Generic.idr">Generic.idr</a>            </td><td align="right">2019-03-04 18:08  </td><td align="right">333 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="HOF.idr">HOF.idr</a>                </td><td align="right">2019-03-04 18:08  </td><td align="right">145 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="Hello.idr">Hello.idr</a>              </td><td align="right">2019-03-04 18:08  </td><td align="right"> 64 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="HelloHole.idr">HelloHole.idr</a>          </td><td align="right">2019-03-04 18:08  </td><td align="right"> 54 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="Let_Where.idr">Let_Where.idr</a>          </td><td align="right">2019-03-04 18:08  </td><td align="right">474 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="TCVects.idr">TCVects.idr</a>            </td><td align="right">2019-03-04 18:08  </td><td align="right"> 97 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="Tree.idr">Tree.idr</a>               </td><td align="right">2019-03-04 18:08  </td><td align="right">663 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="Vectors.idr">Vectors.idr</a>            </td><td align="right">2019-03-04 18:08  </td><td align="right">321 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="WordLength_vec.idr">WordLength_vec.idr</a>     </td><td align="right">2019-03-04 18:08  </td><td align="right">149 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="binary.idr">binary.idr</a>             </td><td align="right">2019-03-04 18:08  </td><td align="right">1.3K</td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="parity.idr">parity.idr</a>             </td><td align="right">2019-03-04 18:08  </td><td align="right">954 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="removeElem.idr">removeElem.idr</a>         </td><td align="right">2019-03-04 18:08  </td><td align="right">543 </td><td>&nbsp;</td></tr>
+   <tr><th colspan="5"><hr></th></tr>
+</table>
+<address>Apache/2.4.34 (Unix) OpenSSL/1.0.2o mod_python/3.5.0 Python/2.7.15 SVN/1.10.2 mod_jk/1.2.37 mod_watch/4.3 mod_perl/2.0.10 Perl/v5.28.0 Server at duch.mimuw.edu.pl Port 443</address>
+</body></html>

@@ -1,0 +1,1 @@
+~daria/.cabal/bin/idris

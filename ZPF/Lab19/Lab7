@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <title>Programowanie z typami zależnymi i dowodzenie twierdzeń - laboratorium 10</title>
+</head>
+<body>
+
+1.Consider the following definition :
+  <br>
+  <br>
+Set Implicit Arguments.
+<br>
+  <br>
+(* potentialy infinite trees with internal nodes labeled with type A *)
+<br>
+<br>
+CoInductive LTree (A : Set) : Set :=  <br>
+   LLeaf :  LTree A  <br>
+ | LBin : A -> (LTree A) -> (LTree A) -> LTree A.  <br>
+<br>
+Define the following predicates and functions :  <br>
+<br>
+    (is_LLeaf t) is a proposition meaning "t is a leaf".<br>
+    (L_root t) returns the label of the root of t (if exists)<br>
+    (L_left_son t) returns the left son of t (if exists)<br>
+    (L_right_son t) returns the right son of t (if exists)<br>
+    (L_subtree p t) returns the subtree of t at path p (if exists)<br>
+    (LTree_label p t) returns the label at path p (if exists)<br> 
+<br>
+<br>
+2. Define the function graft such that (graft t t') is the tree obtained by replacing all leaves of t by t'.   <br>
+  <br>
+3. Prove unfold lemmas for grafting, i.e. the following theorems :  <br>
+  <br>
+Lemma graft_unfold1 : forall (A:Set) (t': LTree A), graft LLeaf  t' = t'.  <br>
+  <br>
+Lemma graft_unfold2: forall (A:Set)(a:A) (t1 t2 t':LTree A), (graft (LBin a t1 t2) t')=  (LBin a (graft t1 t') (graft t2 t')).  <br>
+  <br>
+Lemma graft_unfold : forall (A:Set) (t t': LTree A),  <br>
+                     graft t t' = match t  with  <br>
+                                  | LLeaf => t'  <br>
+ | LBin n t1 t2 =>  LBin  n (graft t1 t') (graft t2 t')  <br>
+                                  end.  <br>
+  <br>
+4. Define four predicates on potentially infinite binary trees :<br>
+<br>
+(a)    Having some infinite branch<br>
+(b)    Having only infinite branches<br>
+(c)    Having some finite branch<br>
+(d)    Having only finite branches (i.e. being finite)<br> 
+<br>
+For each of the preceding predicates, build an example tree, then prove that it satisfies this predicate.
+Prove the following theorems (for any tree t) :<br>
+<br>
+(i)    If every branch of t is finite, t has no infinite branch.<br>
+(ii)   If t has some infinite branch, the not every branch of t is finite.<br>
+(iii)  If t has some finite branch, then not every branch of t is infinite.<br>
+(iv)   If t has no finite branch, then every branch of t is infinite.<br>
+(v)    If t is finite, then (graft t (LLeaf A))=t.<br>
+(vi)   (in classical logic :) if not every branch of t is finite, then t has some infinite branch.<br> 
+<br>
+5. Define (coinductively) the notion of bisimilarity on LTree A. <br>
+<br>
+6. Prove that, if some tree t1 has only infinite branches, then t1 and (graft t1 t2) are bisimilar.<br>
+<br>
+
+  
+</body></html>

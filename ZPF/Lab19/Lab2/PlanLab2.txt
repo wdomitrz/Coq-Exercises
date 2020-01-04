@@ -1,0 +1,24 @@
+How to run Coq on students:
+
+* coqide file.v
+
+
+Introduction:  
+
+* CoqSurvivalKit.pdf
+
+Exercises:
+
+* logic.v
+* functions.v
+* coqITP2015-ex1.v 
+
+
+Exercise coqITP2015-ex1.v comes from 
+
+https://coq.inria.fr/coq-itp-2015
+
+Attention: the solution is also there !
+
+Exercises in logic.v and functions.v come from 
+http://www.labri.fr/perso/casteran/FM/Logique/

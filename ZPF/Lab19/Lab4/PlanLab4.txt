@@ -1,0 +1,17 @@
+Introduction:  
+
+* inductive-types.pdf (examples left from the previous lecture)
+* induction.v
+
+Exercises:
+
+* OneSortStackMachine.v and MultiSortStackMachine.v
+* plist.v (parts a, b, c, d ,e)
+
+OneSortStackMachine.v, MultiSortStackMachine.v come from
+CPDT by Chlipala.
+
+
+
+
+

@@ -1,0 +1,11 @@
+Exercises:
+
+* plist.v (part f)
+* coqITP2015-ex4-tuple.v
+
+plist.v comes from CPDT by Chlipala.
+coqITP2015-ex4-tuple.v comes from https://coq.inria.fr/coq-itp-2015
+
+
+
+
